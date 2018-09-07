@@ -1,3 +1,16 @@
 module.exports = {
-  lintOnSave: false
-}
+  lintOnSave: false,
+  configureWebpack: {
+    module: {
+      loaders: [{
+        test: /\.scss$/,
+        use:[
+          'vue-style-loader',
+          'css-loader',
+          'sass-loader'  
+        ]
+      }]
+    }
+
+  }
+};
