@@ -14,7 +14,14 @@
         <type-selector></type-selector>
       </el-col>
       <el-col :xs="24" :lg="10" class="">
-      <range-slider ></range-slider>
+      <range-slider :slider_value=defaults.slider_value></range-slider>
+      </el-col>
+    </el-row>
+    <el-row>
+      <el-col>
+        <el-button
+        @click="newMix()"
+        >New Mix</el-button>
       </el-col>
     </el-row>
   </el-header>
@@ -31,7 +38,6 @@
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 import RangeSlider from '@/components/RangeSlider.vue'
 import TypeSelector from '@/components/TypeSelector.vue'
 import RedZone from '@/components/RedZone.vue'
@@ -40,9 +46,9 @@ export default {
   name: 'home',
   data() {
     return {
-      
-      red_wines:{
-  "1r": {
+      red_wines:[
+  {
+    "id": "1r",
     "type": "red",
     "name": "BAROLO D.O.C.G.",
     "year": 2014,
@@ -53,7 +59,8 @@ export default {
     "image": "",
     "": ""
   },
-  "2r": {
+  {
+    "id": "2r",
     "type": "red",
     "name": "BARBARESCO DOCG",
     "year": 2015,
@@ -64,7 +71,8 @@ export default {
     "image": "",
     "": ""
   },
-  "3r": {
+  {
+    "id": "3r",
     "type": "red",
     "name": "NEBBIOLO D'ALBA D.O.C.",
     "year": 2016,
@@ -75,7 +83,8 @@ export default {
     "image": "",
     "": ""
   },
-  "4r": {
+  {
+    "id": "4r",
     "type": "red",
     "name": "DAL 1927 NEBBIOLO D'ALBA D.O.C.",
     "year": 2014,
@@ -86,7 +95,8 @@ export default {
     "image": "",
     "": ""
   },
-  "5r": {
+  {
+    "id": "5r",
     "type": "red",
     "name": "BRICCO DELLA DIAVOLA NEBBIOLO",
     "year": 2015,
@@ -97,7 +107,8 @@ export default {
     "image": "",
     "": 15
   },
-  "6r": {
+  {
+    "id": "6r",
     "type": "red",
     "name": "GIARDINO DEI BASTIONI NEBBIOLO",
     "year": 2015,
@@ -108,7 +119,8 @@ export default {
     "image": "",
     "": ""
   },
-  "7r": {
+  {
+    "id": "7r",
     "type": "red",
     "name": "BARBERA D'ALBA D.O.C.",
     "year": 2016,
@@ -119,7 +131,8 @@ export default {
     "image": "",
     "": ""
   },
-  "8r": {
+  {
+    "id": "8r",
     "type": "red",
     "name": "GRANDEUR BARBERA D'ALBA D.O.C.",
     "year": 2016,
@@ -130,7 +143,8 @@ export default {
     "image": "",
     "": ""
   },
-  "9r": {
+  {
+    "id": "9r",
     "type": "red",
     "name": "DOLCETTO D'ALBA D.O.C.",
     "year": 2017,
@@ -141,7 +155,8 @@ export default {
     "image": "",
     "": ""
   },
-  "10r": {
+  {
+    "id": "10r",
     "type": "red",
     "name": "COLLEZIONE UMBERTO NEBBIOLO",
     "year": 2015,
@@ -152,7 +167,8 @@ export default {
     "image": "",
     "": ""
   },
-  "11r": {
+  {
+    "id": "11r",
     "type": "red",
     "name": "BARBERA DOC SUPERIORE",
     "year": 2015,
@@ -163,7 +179,8 @@ export default {
     "image": "",
     "": ""
   },
-  "12r": {
+  {
+    "id": "12r",
     "type": "red",
     "name": "LANGHE FREISA: FREI",
     "year": 2016,
@@ -174,7 +191,8 @@ export default {
     "image": "",
     "": ""
   },
-  "13r": {
+  {
+    "id": "13r",
     "type": "red",
     "name": "LANGHE ROSSO: FREI",
     "year": 2017,
@@ -185,7 +203,8 @@ export default {
     "image": "",
     "": ""
   },
-  "14r": {
+  {
+    "id": "14r",
     "type": "red",
     "name": "GRIGNOLINO DEL MONFERRATO D.O.C.",
     "year": 2017,
@@ -196,7 +215,8 @@ export default {
     "image": "",
     "": ""
   },
-  "15w": {
+  {
+    "id": "15w",
     "type": "white",
     "name": "ROERO ARNEIS D.O.C.G.",
     "year": 2017,
@@ -207,7 +227,8 @@ export default {
     "image": "",
     "": ""
   },
-  "16w": {
+  {
+    "id": "16w",
     "type": "white",
     "name": "LANGHE CHARDONNAY D.O.C.",
     "year": 2017,
@@ -218,7 +239,8 @@ export default {
     "image": "",
     "": ""
   },
-  "17w": {
+  {
+    "id": "17w",
     "type": "white",
     "name": "CHARBÀ CHARDONNAY D.O.C.",
     "year": 2016,
@@ -229,7 +251,8 @@ export default {
     "image": "",
     "": ""
   },
-  "18w": {
+  {
+    "id": "18w",
     "type": "white",
     "name": "GAVI D.O.C.G.",
     "year": 2017,
@@ -240,7 +263,8 @@ export default {
     "image": "",
     "": ""
   },
-  "19w": {
+  {
+    "id": "19w",
     "type": "white",
     "name": "PRIMULA LANGHE BIANCO D.O.C.",
     "year": 2017,
@@ -251,7 +275,8 @@ export default {
     "image": "",
     "": ""
   },
-  "20ro": {
+  {
+    "id": "20ro",
     "type": "rose",
     "name": "ROSEMONTEU VINO ROSATO",
     "year": "",
@@ -262,7 +287,8 @@ export default {
     "image": "",
     "": ""
   },
-  "21b": {
+  {
+    "id": "21b",
     "type": "bubbles",
     "name": "SPUMANTE METODO CLASSICO V.S.Q",
     "year": "",
@@ -273,7 +299,8 @@ export default {
     "image": "",
     "": ""
   },
-  "22b": {
+  {
+    "id": "22b",
     "type": "bubbles",
     "name": "SPUMANTE CLASSICO EXTRA-BRUT",
     "year": "",
@@ -284,7 +311,8 @@ export default {
     "image": "",
     "": ""
   },
-  "23b": {
+  {
+    "id": "23b",
     "type": "bubbles",
     "name": "SPUMANTE BRUT CLASSIC BARRICATO",
     "year": "",
@@ -295,7 +323,8 @@ export default {
     "image": "",
     "": ""
   },
-  "24b": {
+  {
+    "id": "24b",
     "type": "bubbles",
     "name": "SPUMANTE 1927 BLANC DE BLANCS",
     "year": "",
@@ -306,7 +335,8 @@ export default {
     "image": "",
     "": ""
   },
-  "25s": {
+  {
+    "id": "25s",
     "type": "sweet",
     "name": "BAROLO CHINATO",
     "year": "",
@@ -317,7 +347,8 @@ export default {
     "image": "",
     "": ""
   },
-  "26s": {
+  {
+    "id": "26s",
     "type": "sweet",
     "name": "MOSCATO D'ASTI D.O.C.G.",
     "year": 2017,
@@ -328,7 +359,8 @@ export default {
     "image": "",
     "": ""
   },
-  "27s": {
+  {
+    "id": "27s",
     "type": "sweet",
     "name": "REMIGINO Mosto",
     "year": "",
@@ -339,11 +371,170 @@ export default {
     "image": "",
     "": ""
   }
-}
+]
+        ,
+      mixKarton: [],
+      totalcount: 0,
+      //test: RangeSlider.slider_value,
+      defaults: {
+        pref: 'red',
+        slider_value:[230, 430]
+      },
+      tester:'',
     }
   },
+  methods: {
+    generateRandom() {
+      console.log('started in random');
+      let random = Math.floor(Math.random()*27);
+      console.log(random);
+      return random;
+    },
+    totalPrice() {
+      console.log('started total price')
+      let total = 0;
+      for(let i =0; i<this.mixKarton.length;i++){
+        total+=this.red_wines[i].price;
+
+      }
+      console.log(total)
+      return total;
+    },
+    checkPrice(range) {
+      let result = 'default';
+      this.totalcount++
+      //if(this.totalcount==100)throw new Error("Something went badly wrong!");
+      console.log('started check price')
+      let totalPrice = this.totalPrice();
+      if (totalPrice<range[0]){
+        result = 'low';
+      }
+      else if (totalPrice>range[1]) {
+        result= 'high';
+      }
+      else result= 'inrange'
+      console.log(result);
+      return result;
+    },
+    checkPref(pref) {
+      this.totalcount++
+      //if(this.totalcount==100)throw new Error("Something went badly wrong!");
+      console.log('started in add to check pref')
+      let prefCount = 1;
+      for(let i =0; i<this.mixKarton.length;i++){
+        let index = this.mixKarton[i];
+        if(this.red_wines[index].type==pref) prefCount++;
+      }
+      let length = 1;
+      if(this.mixKarton.length == 0) {length =1;}
+      else {length = this.mixKarton.length;}
+      let prefcent = ((prefCount*100)/length);
+      console.log('prefcent= ' + prefcent);
+      if(prefcent<65) {
+        console.log('low')
+        return 'low';
+      }
+      else if(prefcent>75) {
+        console.log('high')
+        return 'high';
+      }
+      if (prefcent >=65 && prefcent <=75){ 
+        console.log('okay')
+        return 'okay';
+      }
+         
+    },
+
+    addToMix(pref) {
+      console.log('started addToMix');
+      let index = this.generateRandom();
+      let indd =this.mixKarton.length;
+      this.mixKarton[indd]=index;
+      
+
+      if(this.checkPref=='low'){
+        
+        if(this.red_wines[index].type==pref) {
+          console.log('low addToMix');
+          let i =this.mixKarton.length;
+          this.mixKarton[i]=index;
+        }
+      }
+      else if(this.checkPref == 'high') {
+        
+        if(this.red_wines[index].type!=pref) {
+          let i =this.mixKarton.length;
+          this.mixKarton[i]=index;
+        }
+      }
+      else if(this.checkPref == 'okay') {
+        
+        let i =this.mixKarton.length;
+        this.mixKarton[i]=index;
+        }
+      },
+    
+    mixControler(pref, range) {
+
+      console.log('started');
+      console.log(this.mixKarton)
+      while(this.checkPrice(range)!='inrange'){
+        console.log('started main loop');
+        this.addToMix(pref);
+      }
+      if(this.checkPref(pref)=='okay'){
+        console.log('done!');
+
+        console.log(this.mixKarton);
+        console.log(this.$route)
+      }
+      else {
+        console.log('!shit!')
+        let prefcent = this.checkPref(pref);
+        if (prefcent=='high') this.adjustPrefcentHigh(prefcent, pref);
+        if (prefcent=='low') this.adjustPrefcentLow(prefcent, pref);
+        this.mixControler(pref, range);
+      }
+
+    },
+    adjustPrefcentHigh(prefcent, pref){
+      let localMix = this.mixKarton
+      for(let i =0; i<localMix.length;i++){
+        let index = localMix[i];
+        if(this.red_wines[index].type==pref) {
+          localMix.splice(i,1);
+        }
+      }
+      
+    },
+    adjustPrefcentLow(prefcent, pref){
+      let localMix = this.mixKarton
+      for(let i =0; i<localMix.length;i++){
+        let index = localMix[i];
+        if(this.red_wines[index].type!=pref) {
+          localMix.splice(i,1);
+        }
+      }
+      
+    },
+    newMix: function(){
+      this.mixKarton=[];
+      this.mixControler('red',this.$store.getters.slider);
+    }
+
+
+  },
+  mounted(){
+  this.mixControler('white', [230, 430])
+  },
+
+  computed: {
+
+
+       
+    
+  },
   components: {
-    HelloWorld,
     RangeSlider,
     TypeSelector,
     RedZone

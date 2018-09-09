@@ -1,5 +1,5 @@
 <template>
-  <el-input-number size="medium" v-model="count" @change="handleChange" :min="0" :max="10"></el-input-number>
+  <el-input-number size="medium" v-model="winecount" @change="handleChange" :min="0" :max="10"></el-input-number>
 </template>
 <script>
   export default {
@@ -9,12 +9,13 @@
     },
     data() {
       return {
-        num1: 1
+          winecount:this.count
       };
     },
     methods: {
       handleChange(value) {
-        console.log(value)
+        console.log(value);
+        this.winecount =value;
       }
     }
   };
