@@ -5,9 +5,10 @@ import router from './router';
 import store from './store';
 import './registerServiceWorker';
 import './assets/scss/element-variables.scss';
-
+import Papa from 'papaparse';
 Vue.config.productionTip = false;
 Vue.use(ElementUI);
+Vue.use(Papa);
 
 new Vue({
   router,

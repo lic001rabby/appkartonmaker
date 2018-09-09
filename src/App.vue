@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" style="margin: 0 80px;">
     <!--
     <div id="nav">
       <router-link to="/">Home</router-link> |
@@ -67,5 +67,8 @@ body {
 }
 .margin-20 {
   margin-bottom: 20px;
+}
+.el-header {
+  height: auto!important;
 }
 </style>
