@@ -605,7 +605,7 @@ export default {
     }
   },
   mounted(){
-  this.mixControler('white', [230, 430])
+  this.mixControler('red', [230, 430])
   },
 
   computed: {

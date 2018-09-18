@@ -6,14 +6,14 @@
   trigger="click"
   >
   <el-table :data="winecase"
-    height = "400"
+    height = 600px
   show-summary
-  :summary-method="getSummaries">
-    <el-table-column width="150" property="name" label="Name"></el-table-column>
-    <el-table-column width="150" property="type" label="Type"></el-table-column>
-    <el-table-column width="100" property="count" label="Count"></el-table-column>
-    <el-table-column width="100" property="price" label="Unit Price"></el-table-column>
-    <el-table-column width="100" property="totalprice" label="Total"></el-table-column>
+  :summary-method="getSummaries" class="datareader">
+    <el-table-column width="200" property="name" label="Name" id="#winename"></el-table-column>
+    <el-table-column width="70" property="type" label="Type"></el-table-column>
+    <el-table-column width="70" property="count" label="Count"></el-table-column>
+    <el-table-column width="70" property="price" label="Price/U"></el-table-column>
+    <el-table-column width="70" property="totalprice" label="Total"></el-table-column>
   </el-table>
   <el-button slot="reference">Mix Details</el-button>
 </el-popover>
@@ -71,3 +71,18 @@
     }
   };
 </script>
+<style>
+.datareader {
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    color: #2c3e50;
+    font-size: 12px;
+}
+.el-table {
+    font-size: 12px;
+}
+#winename {
+    font-size: 12px!important; 
+}
+</style>
