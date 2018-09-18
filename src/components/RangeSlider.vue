@@ -23,12 +23,12 @@
     },
     data() {
       return {
-        localslider : this.slider_value
+        localslider : []
       }
     },
     methods: {
-      change: function(val){
-        this.$store.commit('change', val)
+      change: function(){
+        
       }
     },
     computed: {
@@ -37,8 +37,9 @@
           return this.$store.getters.slider;
         },
         set: function(newVal){
-        this.localslider[newVal[0]]= newVal[1]; 
-
+        console.log (newVal)
+        //this.localslider = newVal; 
+        this.$store.commit("change", newVal)
         }
       }
     }

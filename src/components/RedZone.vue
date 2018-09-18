@@ -1,6 +1,6 @@
 <template>
 <div class="red-zone">
-    <el-row   :gutter="10">
+    <el-row   :gutter="20" style="margin-bottom:0px;">
         <el-col :span="8" v-for="wine of red_wines " :key="wine.id" >
             <wine-card :wine="wine" @wineupdate="handleUpdate"></wine-card>
         </el-col>
@@ -43,7 +43,7 @@ export default {
 </script>
 <style>
 .title {
-    font-size: 15px;
+    font-size: 12px;
     font-weight: 500;
     padding-bottom: 10px; 
     display: inline-block;
@@ -51,9 +51,10 @@ export default {
 
 .description {
     display: block;
-    font-size: 15px;
+    font-size: 12px;
     padding-left: 5px;
-    line-height: 40px;
+    line-height: 20px;
+    margin-top: 10px;
 }
 .description::before{
     content: "-"
