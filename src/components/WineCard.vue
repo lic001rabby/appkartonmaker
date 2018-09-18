@@ -14,7 +14,7 @@
                     <span class="description">{{ wine.info3 }}</span>
                     <span class="title" id="price">&euro;{{ wine.price}}</span>
                    <div id="infobox"> 
-                    <count-setter :count=1></count-setter>
+                    <count-setter :wine="wine" @change="handleChange"></count-setter>
                     </div>
 
                 </el-col>
@@ -28,6 +28,19 @@ export default {
     name:"WineCard",
     props: {
         wine: Object
+    },
+    data() {
+        return {
+            count : this.wine
+        }
+    },
+    methods: {
+        handleChange(value){
+            console.log(this.wine)
+            this.wine.count = value;
+            console.log(this.wine.count);
+            this.$emit ("wineupdate", this.wine);
+        }
     },
 
     components: {

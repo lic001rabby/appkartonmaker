@@ -5,17 +5,40 @@
   export default {
     name: "CountSetter",
     props: {
-        count:Number
+        wine:Object
     },
     data() {
       return {
-          winecount:this.count
+          counter:0
       };
     },
     methods: {
       handleChange(value) {
-        console.log(value);
-        this.winecount =value;
+        console.log(this.wine)
+        console.log('getter'+ this.$store.getters.getCountById(this.wine.id));
+        this.counter=value;
+        this.wine.count = value;
+        this.$emit("change",value);
+        this.$store.commit('wineupdate', this.wine)
+      },  
+    },
+    computed: {
+      
+      winecount: {
+        get: function() {
+          var temp = this.$store.getters.winecase;
+          var count = 0;
+          console.log(temp);
+          console.log('store above');
+          temp.forEach(element => {
+            if(element.id == this.wine.id) count= element.count;
+          }); 
+          return count;
+        },
+        set: function(newVal){
+          this.counter = newVal;
+
+        }
       }
     }
   };

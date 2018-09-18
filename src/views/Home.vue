@@ -13,12 +13,17 @@
       <el-col :xs="24" :lg="11">
         <type-selector></type-selector>
       </el-col>
-      <el-col :xs="24" :lg="10" class="">
+      <el-col :xs="24" :lg="10" class="align-right" :offset="1" >
       <range-slider :slider_value=defaults.slider_value></range-slider>
       </el-col>
     </el-row>
     <el-row>
-      <el-col>
+      <el-col :lg="11">
+       Red {{redstotal}} | White {{whitestotal}} | Sweet {{prefCount('sweet')}} | | bubbles {{prefCount('bubbles')}}
+      </el-col>
+      
+      <el-col :lg="11" style="text-align:right">
+        <data-reader></data-reader>
         <el-button
         @click="newMix()"
         >New Mix</el-button>
@@ -29,7 +34,7 @@
 
   <!-- Main content start -->
   <el-main>
-    <red-zone :red_wines=red_wines></red-zone>
+    <red-zone :red_wines="fulldataKarton" @update="dataUpdate"></red-zone>
   </el-main>
   <!-- Main content end -->
 </el-container>
@@ -41,6 +46,7 @@
 import RangeSlider from '@/components/RangeSlider.vue'
 import TypeSelector from '@/components/TypeSelector.vue'
 import RedZone from '@/components/RedZone.vue'
+import DataReader from '@/components/DataReader.vue'
 
 export default {
   name: 'home',
@@ -57,7 +63,7 @@ export default {
     "info3": "Berühmeste Rotwein",
     "price": 38,
     "image": "",
-    "": ""
+    "": "",     "count": 0
   },
   {
     "id": "2r",
@@ -69,7 +75,7 @@ export default {
     "info3": "Intensiz: Lakriz, Blumen",
     "price": 36,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "3r",
@@ -81,7 +87,7 @@ export default {
     "info3": "Harmonisch",
     "price": 15.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "4r",
@@ -93,7 +99,7 @@ export default {
     "info3": "18-24 Monate in Echtholz",
     "price": 27.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "5r",
@@ -105,7 +111,8 @@ export default {
     "info3": "Harmonisch, Warm",
     "price": 20,
     "image": "",
-    "": 15
+    "": 15,
+    "count": 0
   },
   {
     "id": "6r",
@@ -117,7 +124,7 @@ export default {
     "info3": "Rot, Vanille",
     "price": 27.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "7r",
@@ -129,7 +136,7 @@ export default {
     "info3": "Intensiv, Himbeeren, Pflaumen",
     "price": 11,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "8r",
@@ -141,7 +148,7 @@ export default {
     "info3": "15-24 Monate + 6 Monate in der Flasche",
     "price": 18,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "9r",
@@ -153,7 +160,7 @@ export default {
     "info3": "Frisch, Himbeeren und Kirschen",
     "price": 11,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "10r",
@@ -165,7 +172,7 @@ export default {
     "info3": "Limited",
     "price": 27.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "11r",
@@ -177,7 +184,7 @@ export default {
     "info3": "Exclusive Rot",
     "price": 21,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "12r",
@@ -189,7 +196,7 @@ export default {
     "info3": "------> KANNST DU FREI SCHENKEN",
     "price": 14,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "13r",
@@ -201,7 +208,7 @@ export default {
     "info3": "------> KANNST DU FREI SCHENKEN",
     "price": 9.7,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "14r",
@@ -213,7 +220,7 @@ export default {
     "info3": "",
     "price": 15,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "15w",
@@ -225,7 +232,7 @@ export default {
     "info3": "Rund und Körperlich",
     "price": 13.9,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "16w",
@@ -237,7 +244,7 @@ export default {
     "info3": "Kräftig und frisch",
     "price": 11.7,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "17w",
@@ -249,7 +256,7 @@ export default {
     "info3": "Holz, Ananas, Vanille",
     "price": 23,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "18w",
@@ -261,7 +268,7 @@ export default {
     "info3": "Peach, Kamomille und acidic",
     "price": 18,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "19w",
@@ -273,7 +280,7 @@ export default {
     "info3": "",
     "price": 11,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "20ro",
@@ -285,7 +292,7 @@ export default {
     "info3": "Peach, Blueberry",
     "price": 11,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "21b",
@@ -297,7 +304,7 @@ export default {
     "info3": "Brotkrusten und Hefe",
     "price": 19.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "22b",
@@ -309,7 +316,7 @@ export default {
     "info3": "",
     "price": 19.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "23b",
@@ -321,7 +328,7 @@ export default {
     "info3": "",
     "price": 19.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "24b",
@@ -333,7 +340,7 @@ export default {
     "info3": "Intensiv und elegant",
     "price": 21.6,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "25s",
@@ -345,7 +352,8 @@ export default {
     "info3": "Rhabarber, Orangen, Zimt",
     "price": 32.9,
     "image": "",
-    "": ""
+    "": "",
+    "count": 0
   },
   {
     "id": "26s",
@@ -357,7 +365,7 @@ export default {
     "info3": "Brillantes Strohgelb",
     "price": 16.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   },
   {
     "id": "27s",
@@ -369,10 +377,11 @@ export default {
     "info3": "Mazeration bei niedriger Temperatur",
     "price": 17.5,
     "image": "",
-    "": ""
+        "": "",     "count": 0
   }
 ]
         ,
+      fulldataKarton: [],
       mixKarton: [],
       totalcount: 0,
       //test: RangeSlider.slider_value,
@@ -384,9 +393,28 @@ export default {
     }
   },
   methods: {
-    generateRandom() {
+    kartonCountUpdate(){
+      this.mixKarton.forEach(element => {
+        this.red_wines[element].count++;
+        console.log('from KCU: ' +this.red_wines[element].count);
+        
+      });
+      this.fulldataKarton = this.red_wines;
+    },
+    prefCount: function(pref) {
+      let prefCount = 1;
+      for(let i =0; i<this.mixKarton.length;i++){
+        let index = this.mixKarton[i];
+        if(this.red_wines[index].type==pref) {
+          prefCount++;
+          
+        }
+      }
+      return prefCount;
+    },
+    generateRandom(range) {
       console.log('started in random');
-      let random = Math.floor(Math.random()*27);
+      let random = Math.floor(Math.random()*range);
       console.log(random);
       return random;
     },
@@ -400,13 +428,18 @@ export default {
       console.log(total)
       return total;
     },
+    randomLimit(range){
+      let difference = range[1] - range[0];
+      let limiter = this.generateRandom(difference);
+      return this.generateRandom(limiter);
+    },
     checkPrice(range) {
       let result = 'default';
       this.totalcount++
       //if(this.totalcount==100)throw new Error("Something went badly wrong!");
       console.log('started check price')
       let totalPrice = this.totalPrice();
-      if (totalPrice<range[0]){
+      if (totalPrice<(range[0]+this.randomLimit(range))){
         result = 'low';
       }
       else if (totalPrice>range[1]) {
@@ -447,7 +480,7 @@ export default {
 
     addToMix(pref) {
       console.log('started addToMix');
-      let index = this.generateRandom();
+      let index = this.generateRandom(this.red_wines.length);
       let indd =this.mixKarton.length;
       this.mixKarton[indd]=index;
       
@@ -483,10 +516,12 @@ export default {
         this.addToMix(pref);
       }
       if(this.checkPref(pref)=='okay'){
+        this.kartonCountUpdate();
         console.log('done!');
 
+
         console.log(this.mixKarton);
-        console.log(this.$route)
+        
       }
       else {
         console.log('!shit!')
@@ -519,25 +554,84 @@ export default {
     },
     newMix: function(){
       this.mixKarton=[];
+      this.fulldataKarton=[];
+      this.red_wines.forEach(element =>{
+        element.count=0;
+      })
       this.mixControler('red',this.$store.getters.slider);
+    },
+    dataUpdate(newset){
+      this.fulldataKarton = newset;
+      console.log("dataUpdated");
+      console.log(newset);
+      /*for(var i=0; i<this.red_wines.length; i++){
+        this.fulldataKarton[i]=(newset[i]);
+      }*/
+      
+
     }
-
-
+    
+  },
+  watch: {
+    fulldataKarton:{
+      handler: function(val){
+        console.log('changed');
+        console.log(val);
+        this.$store.commit("kartonupdate", val)
+      },
+      deep: true
+    }
   },
   mounted(){
   this.mixControler('white', [230, 430])
   },
 
   computed: {
-
-
-       
+    redstotal:  function(){
+      
+      let count=0;
+      this.red_wines.forEach(element => {
+        
+        if(element.type=="red"){
+          count+=element.count;
+          console.log(element.count)
+        }
+      });
+      console.log(count);
+      return count;
+      
     
+    },
+    whitestotal:  function(){
+      
+      let count=0;
+      this.red_wines.forEach(element => {
+        
+        if(element.type=="white"){
+          count+=element.count;
+          console.log(element.count)
+        }
+      });
+      console.log(count);
+      return count;
+      
+    
+    }
   },
   components: {
     RangeSlider,
     TypeSelector,
-    RedZone
+    RedZone,
+    DataReader
   }
 }
 </script>
+<style>
+#reddot {
+  height: 16px;
+  width: 16px;
+  border-radius: 50%;
+  background-color: #CD112A;
+}
+</style>
+

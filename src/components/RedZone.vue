@@ -1,8 +1,8 @@
 <template>
 <div class="red-zone">
     <el-row   :gutter="10">
-        <el-col :span="8" v-for="wine of red_wines " :key="wine.name" >
-            <wine-card :wine=wine></wine-card>
+        <el-col :span="8" v-for="wine of red_wines " :key="wine.id" >
+            <wine-card :wine="wine" @wineupdate="handleUpdate"></wine-card>
         </el-col>
     </el-row>   
 </div>
@@ -24,6 +24,17 @@ export default {
             }
     },
      methods: {
+         handleUpdate(wine){
+            this.red_wines.forEach(old_wine => {
+                 if (old_wine.id == wine.id){
+                     old_wine.count = wine.count;
+                 }
+             });  
+             console.log(this.red_wines);
+             this.$emit("update", this.red_wines);
+
+                      
+         }
   },
     components: {
         WineCard
