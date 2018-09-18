@@ -43,7 +43,7 @@ export default {
 </script>
 <style>
 .title {
-    font-size: 18px;
+    font-size: 15px;
     font-weight: 500;
     padding-bottom: 10px; 
     display: inline-block;

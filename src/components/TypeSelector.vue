@@ -14,6 +14,7 @@
         :type=wnr_button_type
         size="small"
         @click="wnr_button_handler"
+        :disabled="true"
         >Red &amp; White</el-button>
     </div>
 </template>
@@ -34,18 +35,21 @@
       this.white_button_type = "default"
       this.wnr_button_type = "default"
       this.type_choice = 1
+      this.$emit('typeChange', "red");
     },
     white_button_handler: function() {
       this.white_button_type = "primary"
       this.red_button_type = "default"
       this.wnr_button_type = "default"
       this.type_choice = 2
+      this.$emit('typeChange', "white");
     },
     wnr_button_handler: function() {
       this.white_button_type = "default"
       this.red_button_type = "default"
       this.wnr_button_type = 'primary'
       this.type_choice = 3
+      this.$emit('typeChange', "both");
     }
 
   }

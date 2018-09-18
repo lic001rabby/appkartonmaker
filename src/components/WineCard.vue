@@ -12,7 +12,7 @@
                     <span class="description">{{ wine.info1 }}</span>
                     <span class="description">{{ wine.info2 }}</span>
                     <span class="description">{{ wine.info3 }}</span>
-                    <span class="title" id="price">&euro;{{ wine.price}}</span>
+                    <span class="title" id="price">&euro;{{ wine.price * wine.count}}</span>
                    <div id="infobox"> 
                     <count-setter :wine="wine" @change="handleChange"></count-setter>
                     </div>
@@ -51,5 +51,7 @@ export default {
 </script>
 
 <style>
-
+.title {
+    font-size: 15px;
+}
 </style>

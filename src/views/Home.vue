@@ -1,6 +1,7 @@
 <template>
 
-<el-container>
+<el-container
+>
   <!--header start -->
   <el-header class="no-right-padding">
     <el-row type="flex" class="row-bg" justify="space-between"  >
@@ -11,7 +12,7 @@
     <div class="margin-20"></div>
     <el-row class="row-bg" justify="space-around">
       <el-col :xs="24" :lg="11">
-        <type-selector></type-selector>
+        <type-selector @typeChange="updatePref"></type-selector>
       </el-col>
       <el-col :xs="24" :lg="10" class="align-right" :offset="1" >
       <range-slider :slider_value=defaults.slider_value></range-slider>
@@ -19,7 +20,7 @@
     </el-row>
     <el-row>
       <el-col :lg="11">
-       Red {{redstotal}} | White {{whitestotal}} | Sweet {{prefCount('sweet')}} | | bubbles {{prefCount('bubbles')}}
+       Red {{redstotal}} | White {{whitestotal}} | Sweet {{sweetstotal}} | | bubbles {{bubblestotal}}
       </el-col>
       
       <el-col :lg="11" style="text-align:right">
@@ -33,7 +34,11 @@
   <!-- header end -->
 
   <!-- Main content start -->
-  <el-main>
+  <el-main v-loading="isLoading"
+  element-loading-text="Loading..."
+    element-loading-spinner="el-icon-loading"
+    element-loading-background="rgba(0, 0, 0, 0.8)"
+  >
     <red-zone :red_wines="fulldataKarton" @update="dataUpdate"></red-zone>
   </el-main>
   <!-- Main content end -->
@@ -52,6 +57,7 @@ export default {
   name: 'home',
   data() {
     return {
+      isLoading : false,
       red_wines:[
   {
     "id": "1r",
@@ -385,6 +391,9 @@ export default {
       mixKarton: [],
       totalcount: 0,
       //test: RangeSlider.slider_value,
+      pref: "red",
+      lowpoint : 65,
+      highpoint: 75,
       defaults: {
         pref: 'red',
         slider_value:[230, 430]
@@ -393,6 +402,17 @@ export default {
     }
   },
   methods: {
+    updatePref (val) {
+      if(val == "both"){
+        this.lowpoint = 45;
+        this.highpoint = 55;
+      }
+      else {
+        this.lowpoint =65;
+        this.highpoint =75;
+        this.pref = val
+      }
+    },
     kartonCountUpdate(){
       this.mixKarton.forEach(element => {
         this.red_wines[element].count++;
@@ -421,10 +441,9 @@ export default {
     totalPrice() {
       console.log('started total price')
       let total = 0;
-      for(let i =0; i<this.mixKarton.length;i++){
-        total+=this.red_wines[i].price;
-
-      }
+      this.mixKarton.forEach(element => {
+        total+=this.red_wines[element].price  
+      });
       console.log(total)
       return total;
     },
@@ -435,7 +454,7 @@ export default {
     },
     checkPrice(range) {
       let result = 'default';
-      this.totalcount++
+      //this.totalcount++
       //if(this.totalcount==100)throw new Error("Something went badly wrong!");
       console.log('started check price')
       let totalPrice = this.totalPrice();
@@ -444,6 +463,7 @@ export default {
       }
       else if (totalPrice>range[1]) {
         result= 'high';
+        console.log(this.mixKarton.pop())
       }
       else result= 'inrange'
       console.log(result);
@@ -463,22 +483,22 @@ export default {
       else {length = this.mixKarton.length;}
       let prefcent = ((prefCount*100)/length);
       console.log('prefcent= ' + prefcent);
-      if(prefcent<65) {
+      if(prefcent<this.lowpoint) {
         console.log('low')
         return 'low';
       }
-      else if(prefcent>75) {
+      else if(prefcent>this.highpoint) {
         console.log('high')
         return 'high';
       }
-      if (prefcent >=65 && prefcent <=75){ 
+      if (prefcent >=this.lowpoint && prefcent <=this.highpoint){ 
         console.log('okay')
         return 'okay';
-      }
-         
+      }    
     },
 
     addToMix(pref) {
+      
       console.log('started addToMix');
       let index = this.generateRandom(this.red_wines.length);
       let indd =this.mixKarton.length;
@@ -510,6 +530,7 @@ export default {
     mixControler(pref, range) {
 
       console.log('started');
+      this.isLoading = true;
       console.log(this.mixKarton)
       while(this.checkPrice(range)!='inrange'){
         console.log('started main loop');
@@ -518,6 +539,7 @@ export default {
       if(this.checkPref(pref)=='okay'){
         this.kartonCountUpdate();
         console.log('done!');
+        this.isLoading = false;
 
 
         console.log(this.mixKarton);
@@ -558,7 +580,7 @@ export default {
       this.red_wines.forEach(element =>{
         element.count=0;
       })
-      this.mixControler('red',this.$store.getters.slider);
+      this.mixControler(this.pref, this.$store.getters.slider);
     },
     dataUpdate(newset){
       this.fulldataKarton = newset;
@@ -614,8 +636,32 @@ export default {
       });
       console.log(count);
       return count;
+    },
+    sweetstotal:  function(){
       
-    
+      let count=0;
+      this.red_wines.forEach(element => {
+        
+        if(element.type=="sweet"){
+          count+=element.count;
+          console.log(element.count)
+        }
+      });
+      console.log(count);
+      return count;
+    },
+    bubblestotal:  function(){
+      
+      let count=0;
+      this.red_wines.forEach(element => {
+        
+        if(element.type=="bubbles"){
+          count+=element.count;
+          console.log(element.count)
+        }
+      });
+      console.log(count);
+      return count;
     }
   },
   components: {
